@@ -1,6 +1,51 @@
 server:
-  port: 9000
+  port: 9001
 
 spring:
   application:
     name: auth-service
+  security:
+    oauth2:
+      authorizationserver:
+        issuer: https://gvu.portal.auth.com
+        multiple-issuers-allowed: false
+        client:
+          portal-api:
+            registration:
+              client-name: Portal API Client
+              client-id: ${OAUTH2_CLIENT_PORTAL_API_CLIENT_ID}
+              client-secret: ${OAUTH2_CLIENT_PORTAL_API_CLIENT_SECRET}
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - ${OAUTH2_CLIENT_PORTAL_API_REDIRECT_URI}
+              scopes:
+                - "openid"
+                - "profile"
+            require-proof-key: false
+            require-authorization-consent: false
+
+portal:
+  security:
+    csrf:
+      exclude:
+        - "/.well-known/openid-configuration"
+        - "/.well-known/jwks.json"
+        - "/oauth2/token"
+        - "/oauth2/jwks"
+    endpoints:
+      exclude:
+        - "/.well-known/openid-configuration"
+        - "/.well-known/jwks.json"
+
+logging:
+  level:
+    org.springframework.security.oauth2.client: DEBUG
+    org.springframework.security.oauth2.server.resource: DEBUG
+    org.springframework.data.redis: DEBUG
+    io.lettuce.core: DEBUG
+    reactor.netty.http.server.HttpServer: DEBUG
+    org.springframework.security: DEBUG

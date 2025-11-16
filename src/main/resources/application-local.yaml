@@ -1,0 +1,14 @@
+spring:
+  config:
+    import: "classpath:values-local.properties"
+  cloud:
+    vault:
+      enabled: false
+
+jwt:
+  keystore:
+    type: ${JWT_KEYSTORE_TYPE}
+    path: ${JWT_KEYSTORE_PATH}
+    password: ${JWT_KEYSTORE_PASSWORD}
+    alias: ${JWT_KEYSTORE_ALIAS}
+    id: ${JWT_KEYSTORE_ID}
