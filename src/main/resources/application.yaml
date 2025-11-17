@@ -28,19 +28,6 @@ spring:
             require-proof-key: false
             require-authorization-consent: false
 
-portal:
-  security:
-    csrf:
-      exclude:
-        - "/.well-known/openid-configuration"
-        - "/.well-known/jwks.json"
-        - "/oauth2/token"
-        - "/oauth2/jwks"
-    endpoints:
-      exclude:
-        - "/.well-known/openid-configuration"
-        - "/.well-known/jwks.json"
-
 logging:
   level:
     org.springframework.security.oauth2.client: DEBUG

@@ -23,19 +23,11 @@ public class AuthorizationServerSecurityConfiguration {
         http
                 .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
                 .with(authorizationServerConfigurer, (authorizationServer) ->
-                        authorizationServer
-                                .oidc(Customizer.withDefaults())	// Enable OpenID Connect 1.0
+                        authorizationServer.oidc(Customizer.withDefaults())
                 )
-//                .authorizeHttpRequests((authorize) ->
-//                        authorize
-//                                // Публичные эндпоинты Discovery и JWKS должны быть доступны анонимно
-//                                .requestMatchers(
-//                                        "/.well-known/openid-configuration",
-//                                        "/.well-known/jwks.json",
-//                                        "/oauth2/jwks"
-//                                ).permitAll()
-//                                .anyRequest().authenticated()
-//                )
+                .authorizeHttpRequests((authorize) ->
+                        authorize.anyRequest().authenticated()
+                )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers(authorizationServerConfigurer.getEndpointsMatcher())
                 )
